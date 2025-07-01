@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Prescription } from './entities/entities/Prescription.entity';
 
 @Module({
   imports: [
@@ -12,9 +13,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'athul',
       password: 'Athul@97',
       database: 'prescription',
-      autoLoadEntities: true,
-      synchronize: true, // Set to false in production
+      entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+      synchronize: false,
+      extra: {
+        charset: 'utf8mb4_general_ci',
+        ssl: false,
+      },
     }),
+    TypeOrmModule.forFeature([Prescription]),
   ],
   controllers: [AppController],
   providers: [AppService],
