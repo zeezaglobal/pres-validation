@@ -1,0 +1,129 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Doctors List</title>
+    <link
+      href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'
+      rel='stylesheet'
+    />
+    <link rel='stylesheet' href='/css/doctors.css' />
+  </head>
+  <body>
+    <div class='container mt-5'>
+      <h2 class='mb-4'>Doctors List</h2>
+      <div class='row'>
+        {{#each result}}
+          <div class='col-md-6 mb-4'>
+            <div class='card'>
+              <div class='card-body d-flex align-items-center'>
+                <div class='doctor-dp'>
+                  {{#if this.dp}}
+                    <img
+                      src='{{this.dp}}'
+                      alt='DP'
+                      style='width:100%;height:100%;border-radius:50%;object-fit:cover;'
+                    />
+                  {{else}}
+                    {{#if this.firstName}}
+                      {{initial this.firstName}}
+                    {{/if}}
+                    {{#if this.lastName}}
+                      {{initial this.lastName}}
+                    {{/if}}
+                  {{/if}}
+                </div>
+                <div class='flex-grow-1'>
+                  <h5 class='card-title mb-1'>
+                    {{this.firstName}}
+                    {{this.lastName}}
+                  </h5>
+                  <p class='mb-1'>
+                    <strong>Specialization:</strong>
+                    {{this.specialization}}
+                  </p>
+                  <p class='mb-1'>
+                    <strong>Hospital:</strong>
+                    {{this.hospitalName}}
+                  </p>
+                  <p class='mb-1'>
+                    <strong>Contact:</strong>
+                    {{this.contactNumber}}
+                  </p>
+                  <p class='mb-1'>
+                    <strong>License #:</strong>
+                    {{this.licenseNumber}}
+                  </p>
+                  <p class='mb-1'>
+                    <strong>Status:</strong>
+                    {{#if this.validated}}
+                      <span class='badge bg-success'>Validated</span>
+                    {{else}}
+                      <span class='badge bg-warning text-dark'>Not Validated</span>
+                    {{/if}}
+                  </p>
+                </div>
+                {{#unless this.validated}}
+                  <button
+                    class='btn btn-primary ms-2 validate-btn'
+                    data-id='{{this.id}}'
+                  >
+                    <span class='btn-text'>Validate</span>
+                    <span class='loader d-none'></span>
+                  </button>
+                {{/unless}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div
+      class='modal fade'
+      id='confirmModal'
+      tabindex='-1'
+      aria-labelledby='confirmModalLabel'
+      aria-hidden='true'
+    >
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title' id='confirmModalLabel'>
+              Confirm Validation
+            </h5>
+            <button
+              type='button'
+              class='btn-close'
+              data-bs-dismiss='modal'
+              aria-label='Close'
+            ></button>
+          </div>
+          <div class='modal-body'>
+            Are you sure you want to validate this doctor?
+          </div>
+          <div class='modal-footer'>
+            <button
+              type='button'
+              class='btn btn-secondary'
+              data-bs-dismiss='modal'
+            >
+              Cancel
+            </button>
+            <button
+              type='button'
+              class='btn btn-primary'
+              id='confirmValidateBtn'
+            >
+              Yes, Validate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'
+    ></script>
+    <script src='/js/doctors.js'></script>
+  </body>
+</html>

@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prescription } from './entities/entities/Prescription.entity';
+import { Doctor } from './entities/entities/Doctor.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Prescription } from './entities/entities/Prescription.entity';
         ssl: false,
       },
     }),
-    TypeOrmModule.forFeature([Prescription]),
+    TypeOrmModule.forFeature([Prescription, Doctor]),
   ],
   controllers: [AppController],
   providers: [AppService],
