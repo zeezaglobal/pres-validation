@@ -28,6 +28,9 @@ export class Doctor {
   @Column('varchar', { name: 'stripe_username', nullable: true, length: 255 })
   stripeUsername: string | null;
 
+  @Column('int', { name: 'validated', nullable: true })
+  validated: number | null;
+
   @OneToOne(() => User, (user) => user.doctor, {
     onDelete: 'NO ACTION',
     onUpdate: 'NO ACTION',
