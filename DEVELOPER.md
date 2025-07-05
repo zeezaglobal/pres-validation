@@ -25,22 +25,7 @@ This project is a NestJS-based backend application for prescription validation. 
    npm install
    ```
 3. **Configure DB Credentials:**
-   - Use the following MySQL configuration for your database connection in the `app.module.ts`.:
-     ```app.module
-     {
-       type: 'mysql',
-       host: '-----',
-       port: 3306,
-       username: '----',
-       password: '----',
-       database: '---',
-       entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-       synchronize: false,
-       extra: {
-         charset: 'utf8mb4_general_ci',
-         ssl: false,
-       },
-     }
+   - Add .env file to the project root folder. the structure of env file is fiven in env example file .
      ```
 
 ## Project Structure
@@ -100,3 +85,10 @@ The email verification flow allows users to verify their email addresses using a
 - OTPs are stored in the `email_otps` table with expiry and creation timestamps.
 - OTPs are sent using SendGrid (API key required in environment config).
 - On successful verification, the OTP record is deleted.
+  
+## Prescription Validation
+
+-Instead of passing pres id pass export function encodeId(id: number | string): string {
+  const raw = typeof id === 'number' ? id.toString() : id;
+  return CryptoJS.AES.encrypt(raw, SALT).toString();
+} salt is in the secret documentation
