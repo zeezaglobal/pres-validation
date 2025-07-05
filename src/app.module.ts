@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Prescription } from './entities/entities/Prescription.entity';
 import { Doctor } from './entities/entities/Doctor.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EmailValidationModule } from './email-validation/email-validation.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
     }),
     TypeOrmModule.forFeature([Prescription, Doctor]),
+    EmailValidationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

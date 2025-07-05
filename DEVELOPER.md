@@ -79,3 +79,24 @@ This project is a NestJS-based backend application for prescription validation. 
 - Fork the repository and create a feature branch.
 - Write clear commit messages.
 - Follow the existing code style and structure.
+
+## Email Verification Flow
+
+The email verification flow allows users to verify their email addresses using a One-Time Password (OTP) sent via email.
+
+### Endpoints
+
+- **POST `/email-validation/send-otp`**
+  - **Body:** `{ "email": "user@example.com" }`
+  - Untill we verify the email with a custom domain accounts needs to be created on mailinator.
+  - Generates a 6-digit OTP, stores it with a 5-minute expiry, and sends it to the provided email.
+
+- **POST `/email-validation/verify-otp`**
+  - **Body:** `{ "email": "user@example.com", "code": "123456" }`
+  - Verifies the OTP for the email. If valid and not expired, verification succeeds.
+
+### Implementation Details
+
+- OTPs are stored in the `email_otps` table with expiry and creation timestamps.
+- OTPs are sent using SendGrid (API key required in environment config).
+- On successful verification, the OTP record is deleted.
