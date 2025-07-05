@@ -1,13 +1,10 @@
 import * as CryptoJS from 'crypto-js';
 
-const SALT = 'athulisagoodboy';
-
 export function encodeId(id: number | string): string {
   const raw = typeof id === 'number' ? id.toString() : id;
-  return CryptoJS.AES.encrypt(raw, SALT).toString();
+  return Buffer.from(raw, 'utf-8').toString('base64');
 }
 
-export function decodeId(encryptedId: string): string {
-  const bytes = CryptoJS.AES.decrypt(encryptedId, SALT);
-  return bytes.toString(CryptoJS.enc.Utf8);
+export function decodeId(encodedId: string): string {
+  return Buffer.from(encodedId, 'base64').toString('utf-8');
 }
